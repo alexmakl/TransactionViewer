@@ -2,7 +2,7 @@
 //  ProductsPresenter.swift
 //  TransactionViewer
 //
-//  Created by Alexander on 03.03.2025.
+//  Created by Alexander Maklakov on 03.03.2025.
 //
 
 import Foundation
@@ -37,5 +37,9 @@ final class ProductsPresenter: ProductsPresenterProtocol {
             ProductViewModel(title: $0.sku, transactions: "\($0.transactions.count) transactions")
         }
         view.reloadData(productsToShow)
+    }
+
+    func setError() {
+        router.showAlert(message: "No transactions found")
     }
 }

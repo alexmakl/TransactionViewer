@@ -2,7 +2,7 @@
 //  ProductsProtocols.swift
 //  TransactionViewer
 //
-//  Created by Alexander on 03.03.2025.
+//  Created by Alexander Maklakov on 03.03.2025.
 //
 
 import Foundation
@@ -17,6 +17,7 @@ protocol ProductsPresenterProtocol: AnyObject {
 
     func showProducts(_ products: [Product])
     func showTransactions(for product: Product)
+    func setError()
 }
 
 protocol ProductsInteractorProtocol {
@@ -25,6 +26,7 @@ protocol ProductsInteractorProtocol {
 }
 
 protocol ProductsRouterProtocol {
+    func showAlert(message: String)
     func showTransactionsScreen(for product: Product)
 }
 

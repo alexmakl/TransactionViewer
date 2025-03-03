@@ -2,10 +2,11 @@
 //  ProductsRouter.swift
 //  TransactionViewer
 //
-//  Created by Alexander on 03.03.2025.
+//  Created by Alexander Maklakov on 03.03.2025.
 //
 
 import Foundation
+import UIKit
 
 final class ProductsRouter: ProductsRouterProtocol {
 
@@ -13,6 +14,12 @@ final class ProductsRouter: ProductsRouterProtocol {
 
     required init(viewController: ProductsViewController) {
         self.viewController = viewController
+    }
+
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        viewController?.present(alert, animated: true)
     }
 
     func showTransactionsScreen(for product: Product) {

@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  TransactionViewer
 //
-//  Created by Alexander on 03.03.2025.
+//  Created by Alexander Maklakov on 03.03.2025.
 //
 
 import UIKit
@@ -35,7 +35,7 @@ extension TransactionsViewController: TransactionsViewProtocol {
     }
 
     func reloadData(title: String, _ transactions: [TransactionViewModel]) {
-        updateHeader(title)
+        setupHeader(title)
         applySnapshot(transactions)
     }
 }
@@ -60,6 +60,7 @@ fileprivate extension TransactionsViewController {
     
     func setupCollectionView() {
         var configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
+        configuration.headerMode = .supplementary
         configuration.showsSeparators = true
 
         let layout = UICollectionViewCompositionalLayout.list(using: configuration)
@@ -96,20 +97,15 @@ fileprivate extension TransactionsViewController {
 
             return cell
         }
-        
-        let header = UICollectionView.SupplementaryRegistration<TransactionsHeaderView>(elementKind: UICollectionView.elementKindSectionHeader) { headerView, dsa, transaction in
-            let totalAmount = "Total: "
-            headerView.configure(text: totalAmount)
-        }
-        
-        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
-            return collectionView.dequeueConfiguredReusableSupplementary(using: header, for: indexPath)
-        }
     }
 
-    func updateHeader(_ title: String) {
-        if let headerView = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0)) as? TransactionsHeaderView {
+    func setupHeader(_ title: String) {
+        let header = UICollectionView.SupplementaryRegistration<TransactionsHeaderView>(elementKind: UICollectionView.elementKindSectionHeader) { headerView, _, _ in
             headerView.configure(text: title)
+        }
+
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+            return collectionView.dequeueConfiguredReusableSupplementary(using: header, for: indexPath)
         }
     }
 

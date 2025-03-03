@@ -2,7 +2,7 @@
 //  TransactionsHeaderView.swift
 //  TransactionViewer
 //
-//  Created by Alexander on 03.03.2025.
+//  Created by Alexander Maklakov on 03.03.2025.
 //
 
 import Foundation
@@ -15,7 +15,7 @@ final class TransactionsHeaderView: UICollectionReusableView {
     private let label: UILabel = {
         let label = UILabel()
         label.adjustsFontForContentSizeCategory = true
-        label.font = UIFont.preferredFont(forTextStyle: .title2)
+        label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textAlignment = .left
         return label
     }()
@@ -38,8 +38,8 @@ final class TransactionsHeaderView: UICollectionReusableView {
         label.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             label.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }

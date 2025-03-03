@@ -2,7 +2,7 @@
 //  TransactionsPresenter.swift
 //  TransactionViewer
 //
-//  Created by Alexander on 03.03.2025.
+//  Created by Alexander Maklakov on 03.03.2025.
 //
 
 import Foundation
@@ -24,12 +24,16 @@ final class TransactionsPresenter: TransactionsPresenterProtocol {
         interactor.loadData()
     }
 
-    func showTransactions(_ sku: String, _ transactions: [Transaction]) {
+    func showTransactions(_ sku: String, _ transactions: [TransactionFull], _ total: Double) {
         view.updateTitle("Transactions for \(sku)")
+        let gbpSymbol = "GBP".currencySymbol
 
         let transactionsToShow: [TransactionViewModel] = transactions.compactMap {
-            TransactionViewModel(amount: $0.amount, convertedAmount: "\($0.currency) \($0.amount)")
+            TransactionViewModel(
+                amount: String(format: "\($0.currency.currencySymbol)%.2f", $0.amount),
+                convertedAmount: String(format: "\(gbpSymbol)%.2f", $0.convertedAmount)
+            )
         }
-        view.reloadData(title: "Total: ", transactionsToShow)
+        view.reloadData(title: String(format: "Total: \(gbpSymbol)%.2f", total), transactionsToShow)
     }
 }
