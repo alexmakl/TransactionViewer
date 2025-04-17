@@ -21,16 +21,18 @@ final class TransactionsInteractor: TransactionsInteractorProtocol {
     }
 
     func loadData() {
-        exchangeRates = dataService.loadRates()
+        Task {
+            exchangeRates = await dataService.loadRates()
 
-        let sku = dataStorage.product.sku
-        let transactions = dataStorage.product.transactions.map {
-            TransactionFull(amount: Double($0.amount) ?? 0.0, currency: $0.currency, convertedAmount: convertAmount($0))
+            let sku = dataStorage.product.sku
+            let transactions = dataStorage.product.transactions.map {
+                TransactionFull(amount: Double($0.amount) ?? 0.0, currency: $0.currency, convertedAmount: convertAmount($0))
+            }
+            let total = transactions.reduce(0.0) { total, transaction in
+                total + transaction.convertedAmount
+            }
+            await presenter.showTransactions(sku, transactions, total)
         }
-        let total = transactions.reduce(0.0) { total, transaction in
-            total + transaction.convertedAmount
-        }
-        presenter.showTransactions(sku, transactions, total)
     }
 }
 

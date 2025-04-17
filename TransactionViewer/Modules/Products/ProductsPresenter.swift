@@ -32,6 +32,7 @@ final class ProductsPresenter: ProductsPresenterProtocol {
         router.showTransactionsScreen(for: product)
     }
 
+    @MainActor
     func showProducts(_ products: [Product]) {
         let productsToShow: [ProductViewModel] = products.compactMap {
             ProductViewModel(title: $0.sku, transactions: "\($0.transactions.count) transactions")
@@ -39,6 +40,7 @@ final class ProductsPresenter: ProductsPresenterProtocol {
         view.reloadData(productsToShow)
     }
 
+    @MainActor
     func setError() {
         router.showAlert(message: "No transactions found")
     }

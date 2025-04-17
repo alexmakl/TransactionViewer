@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 protocol TransactionsViewProtocol: AnyObject {
     func updateTitle(_ text: String)
     func reloadData(title: String, _ transactions: [TransactionViewModel])
@@ -15,6 +16,7 @@ protocol TransactionsViewProtocol: AnyObject {
 protocol TransactionsPresenterProtocol: AnyObject {
     func viewIsReady()
 
+    @MainActor
     func showTransactions(_ sku: String, _ transactions: [TransactionFull], _ total: Double)
 }
 

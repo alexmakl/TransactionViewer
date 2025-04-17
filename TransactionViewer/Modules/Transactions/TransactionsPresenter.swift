@@ -24,6 +24,7 @@ final class TransactionsPresenter: TransactionsPresenterProtocol {
         interactor.loadData()
     }
 
+    @MainActor
     func showTransactions(_ sku: String, _ transactions: [TransactionFull], _ total: Double) {
         view.updateTitle("Transactions for \(sku)")
         let gbpSymbol = "GBP".currencySymbol

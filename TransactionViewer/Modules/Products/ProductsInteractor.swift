@@ -19,15 +19,17 @@ final class ProductsInteractor: ProductsInteractorProtocol {
     }
 
     func loadData() {
-        let transactions = dataService.loadTransactions()
-
-        guard !transactions.isEmpty else {
-            presenter.setError()
-            return
+        Task {
+            let transactions = await dataService.loadTransactions()
+            
+            guard !transactions.isEmpty else {
+                await presenter.setError()
+                return
+            }
+            
+            products = groupTransactionsBySKU(transactions)
+            await presenter.showProducts(products)
         }
-
-        products = groupTransactionsBySKU(transactions)
-        presenter.showProducts(products)
     }
 
     func getProduct(at index: Int) {

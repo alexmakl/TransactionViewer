@@ -8,13 +8,13 @@
 import Foundation
 
 protocol DataServiceProtocol {
-    func loadTransactions() -> [Transaction]
-    func loadRates() -> [ExchangeRate]
+    func loadTransactions() async -> [Transaction]
+    func loadRates() async -> [ExchangeRate]
 }
 
 final class DataService: DataServiceProtocol {
 
-    func loadTransactions() -> [Transaction] {
+    func loadTransactions() async -> [Transaction] {
         guard let path = Bundle.main.path(forResource: "transactions", ofType: "plist"),
               let array = NSArray(contentsOfFile: path) as? [[String: String]] else {
             return []
@@ -29,7 +29,7 @@ final class DataService: DataServiceProtocol {
         }
     }
 
-    func loadRates() -> [ExchangeRate] {
+    func loadRates() async -> [ExchangeRate] {
         guard let path = Bundle.main.path(forResource: "rates", ofType: "plist"),
               let array = NSArray(contentsOfFile: path) as? [[String: String]] else {
             return []

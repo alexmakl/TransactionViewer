@@ -15,8 +15,10 @@ protocol ProductsPresenterProtocol: AnyObject {
     func viewIsReady()
     func productTapped(at index: Int)
 
-    func showProducts(_ products: [Product])
     func showTransactions(for product: Product)
+    @MainActor
+    func showProducts(_ products: [Product])
+    @MainActor
     func setError()
 }
 
